@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Maze Path Finding Algo</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div id="inputSection">
+        <!-- <button class ="button" onclick = "start()">Start</button> -->
+        <!-- <section>
+            <label for="nums">Enter nums:</label>
+            <div style="position: relative;height: 56px">
+                <input type="range" min = "10" max = "1000" id= "range" value = "35" oninput="updateView();updateInput()" disabled = true/>
+                <div id="rangeSelector">
+                    <div id = "selectorBtn"></div>
+                    <div id = "rangeDisplayer"></div>
+                </div>
+            </div>
+            <script>
+                updateView()
+                function updateView(){
+                    var slider = document.getElementById("range")
+                    var selector = document.getElementById("rangeSelector")
+                    var display = document.getElementById("rangeDisplayer")
+                    selector.style.left = (slider.value - 10)/990 * 100 + '%';
+                    display.innerHTML = slider.value
+                }
+            </script>
+        </section> -->
+        <section>
+            <label for="algoUsed" >Algorithm Used</label>
+            <select class ="select" name = "algoUsed" id = "algoUsed" oninput="updateInput()">
+                <option value = "bfs" >BFS search</option>
+                <option value = "dijkstra">dijkstra search</option>
+                <option value = "astar" selected>A* search</option>
+                <option value = "dfs" >DFS search</option>
+            </select>
+        </section>
+        <section>
+            <button id = "start" class = "button" onclick = "start()">start</button>
+            <button id = "generateMaze" class = "button" onclick = "generateMaze()">generate Maze</button>
+            <button id = "clearMaze" class = "button" onclick = "clearMaze()">clear Maze</button>
+            <button id = "clearMaze" class = "button" onclick = "newMaze()">new Maze</button>
+        </section>
+    </div>
+
+    <div id="mazeContainer"><table id="maze"> </table></div>
+
+    <script src="obj.js"></script>
+    <script src="algorithms.js"></script>
+    <script src="main.js"></script>
+</body>
+</html>

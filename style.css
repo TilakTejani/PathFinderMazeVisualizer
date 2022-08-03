@@ -1,0 +1,203 @@
+:root{
+    --node-size: 20px;
+    --node-font: calc(var(var(--node-size)*0.6))
+    --node-margin : 0px;
+    --node-shadow: 5px;
+    --node-border: 1px;
+    --color1 : #2c144b;
+    --color2 : rgb(91, 43, 154);
+    --color3: #a990cb;
+    --color4: #d7bbff;
+    --starting: rgb(175, 74, 74);
+    --ending: rgb(0, 255, 128);
+}
+
+body{
+    background-color: var(--color3);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+}
+#maze{
+    display: grid;
+    padding: 0;
+}
+.row{
+    display: flex;
+    margin: var(--node-margin);
+}
+.node{  
+    height: var(--node-size);
+    width: var(--node-size);
+    border-style: solid ;
+    border-color: var(--color2);
+    border-width: var(--node-border);
+    margin: var(--node-margin);
+    transition: 0.25s ease-in-out;
+    background-color: var(--color4);
+    box-sizing: border-box;
+}
+
+.node:hover{
+    box-shadow: var(--node-shadow) var(--node-shadow) var(--node-shadow) gray;
+    transform: scale(1.1);
+}
+.searching{
+    content: none;
+    background-color: palevioletred;
+}
+.inWay{
+    display: flex;
+    justify-content: center;
+    align-items: center;   
+    background-color: var(--color2);
+    color: var(--starting);
+    font-size: large;
+    font-weight: bold;
+    border-color: var(--color4);
+}
+.wall{
+    background-color: var(--color1);
+}
+
+.visited{
+    background-color: var(--color3);
+}
+.startNode{
+    background-color: var(--starting);
+    color:var(--color4)
+}
+
+.endNode{
+    content: none;
+    background-color: var(--ending);
+}
+.cur{
+    background-color: var(--color2);
+}
+
+
+#inputSection {
+    background: var(--color2);
+    margin: 10px;
+    background: linear-gradient(
+      51deg,
+      rgba(255, 255, 255, 1) 0%,
+      rgba(188, 149, 221, 1) 40%,
+      rgba(211, 186, 232, 1) 65%,
+      rgba(250, 250, 250, 0) 100%
+    );
+    display: flex;
+  }
+  .button {
+    margin: 10px;
+    padding: 10px;
+    background: var(--color2);
+    background: linear-gradient(
+      51deg,
+      rgba(91, 43, 154, 1) 0%,
+      rgba(165, 125, 219, 1) 36%,
+      rgba(182, 143, 234, 1) 49%,
+      rgba(207, 170, 255, 1) 71%
+    );
+    border: 0px;
+    border-radius: 5px;
+    color: var(--color1);
+    box-shadow: 5px 5px 5px #2c144b;
+  }
+  .button:hover,
+  .button:disabled {
+    background: var(--color2);
+    color: rgb(178, 147, 218);
+    pointer-events: stroke;
+    box-shadow: 0px 0px 0px;
+    transition: 0.25s;
+  }
+  .select {
+    background: rgb(91, 43, 154);
+    background: linear-gradient(
+      51deg,
+      rgba(91, 43, 154, 1) 0%,
+      rgba(165, 125, 219, 1) 36%,
+      rgba(182, 143, 234, 1) 49%,
+      rgba(207, 170, 255, 1) 71%
+    );
+    outline: none;
+    border: var(--color3);
+    padding: 10px;
+  }
+  .option {
+    background: rgb(91, 43, 154);
+    background: linear-gradient(
+      51deg,
+      rgba(91, 43, 154, 1) 0%,
+      rgba(165, 125, 219, 1) 36%,
+      rgba(182, 143, 234, 1) 49%,
+      rgba(207, 170, 255, 1) 71%
+    );
+    outline: none;
+    border: var(--color3);
+    padding: 10px;
+  }
+  
+  #range {
+    -webkit-appearance: none;
+    width: 100%;
+    height: 7px;
+    border-radius: 5px;
+    outline: none;
+    position: absolute;
+    bottom: 0px;
+  }
+  #range:disabled {
+    background-color: powderblue;
+  }
+  #range::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    position: relative;
+    width: 48px;
+    height: 48px;
+    z-index: 3;
+  }
+  #rangeSelector {
+    position: relative;
+    width: 30px;
+    height: inherit;
+    left: 35%;
+    transform: translateX(-50%);
+    display: flex;
+    justify-content: center;
+  }
+  #selectorBtn {
+    height: 15px;
+    width: 15px;
+    position: absolute;
+    bottom: 0px;
+    border-radius: 50%;
+    background-color: var(--color1);
+  }
+  #rangeDisplayer {
+    height: 25px;
+    width: 40px;
+    position: absolute;
+    top: 0px;
+    background-color: var(--color1);
+    color: #a0d2eb;
+    border-radius: 5px;
+    text-align: center;
+    font-size: 18px;
+    font-weight: bold;
+  }
+  
+  #rangeDisplayer::after {
+    content: "";
+    border-top: 15px solid var(--color1);
+    border-left: 20px solid transparent;
+    border-right: 20px solid transparent;
+    top: 90%;
+    left: 0;
+    position: absolute;
+    z-index: 100;
+  }
