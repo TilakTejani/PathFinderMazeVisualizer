@@ -6,6 +6,7 @@ class Maze{
         this.matrix = this.preparemaze(this.rows, this.cols)
         this.startNode = this.matrix[0][0]
         this.endNode = this.matrix[1][1]
+        
 
 
         this.el.addEventListener("toggleWall", () => {
@@ -49,7 +50,6 @@ class Maze{
     clearMaze(){
         this.matrix.forEach(row => {
             row.forEach(node => {
-                node.removeClass("wall")
                 node.removeClass("searching")
                 node.removeClass("curr")
                 node.removeClass("inWay")
@@ -105,6 +105,7 @@ class Node{
         this.isWall = false
         this.isStart = false
         this.isEnd = false
+        this.temp = new Array(0, 0, 0, 0)         // temp border for prev wall memory, can be used if old memory removed
 
         this.el = document.createElement("td")
         this.el.id = getId(this.i, this.j)
@@ -119,14 +120,25 @@ class Node{
 
         this.el.ondrop = (e) => this.drop(e)
 
-        this.el.onmousedown = (e) => {Node.clicked = true}
-        this.el.onmouseover = (e) => {this.mouseEvent(e)}
-        this.el.onmouseup = (e) => {Node.clicked = false}
+        this.el.onmousedown = (e) => {this.mouseEvent(e, "down")}
+        this.el.onmouseover = (e) => {this.mouseEvent(e, "over")}
+        this.el.onmouseup = (e) => {this.mouseEvent(e, "up")}
     }
 
-    mouseEvent(event){
-        if(Node.clicked){
-            this.toggleWall()
+    mouseEvent(event, type){
+        // event.preventDefault()
+        switch(type){
+            case "down":
+                if(!this.isStart && !this.isEnd)    Node.clicked = true
+                break
+            case "up":
+                Node.clicked = false
+                break
+            case "over":
+                if(!this.isStart && !this.isEnd && Node.clicked)
+                    this.toggleWall()
+                break
+
         }
     }
 
@@ -138,15 +150,13 @@ class Node{
 
     drop(event){
         event.preventDefault()
-        if(!this.isStart && !this.isEnd){
-            let data = event.dataTransfer.getData("data")
-            let loc = Maze.getLoc(event.target.id)
-            if(data == "start"){
-                this.maze.setStartNode(loc[0], loc[1])
-            }
-            if(data == "end"){
-                this.maze.setEndNode(loc[0], loc[1])
-            }
+        let data = event.dataTransfer.getData("data")
+        let loc = Maze.getLoc(event.target.id)
+        if(data == "start" && !this.isEnd){
+            this.maze.setStartNode(loc[0], loc[1])
+        }
+        if(data == "end" && !this.isStart){
+            this.maze.setEndNode(loc[0], loc[1])
         }
     }
 
@@ -157,16 +167,29 @@ class Node{
         this.el.classList.remove(name)
     }
 
+    
     toggleWall(){
         if(this.isWall){
+            // removing wall
             this.isWall = false
             this.removeClass("wall")
-            for(let i = 0 ; i < this.sides ;++i) this.removeWall(i)
-            return
+            this.border = this.temp
+            if(this.border.toString() != "0,0,0,0"){
+                for(let i = 0 ; i < this.sides && !this.temp ; ++i)
+                    this.removeWall(i)
+            }
         }
-        this.isWall = true
-        this.addClass("wall")
-        for(let i = 0 ; i < this.sides ;++i) this.addWall(i)
+        else{
+            // building wall
+            if((this.border.toString() != "1,1,1,1")){
+                console.log("here");
+                this.temp = new Array(...this.border)
+            }
+            this.isWall = true
+            this.addClass("wall")
+            for(let i = 0 ; i < this.sides ; ++i)
+                this.addWall(i)
+        }
     }
 
     addWall(i){
